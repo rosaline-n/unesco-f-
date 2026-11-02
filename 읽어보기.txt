@@ -1,0 +1,60 @@
+ORVIA  :서로 다른 궤도를 잇는 길
+UNESCO 동아리 · programmed by 장주연
+=====================================================
+
+[1] VS Code로 열기
+1. 이 zip을 풀고, VS Code에서 [File(파일)] → [Open Folder(폴더 열기)]로
+   orvia 폴더를 연다.
+2. 왼쪽 목록에서 index.html을 오른쪽 클릭 → Open with Live Server
+   (메뉴에 없으면 왼쪽 세로줄의 네모 4개 아이콘(확장) → 'Live Server' 검색 → Install)
+3. 크롬이 열리면 개발자 도구로 폰 화면을 확인할 수 있다.
+   맥:   Cmd + Option + I  →  폰 모양 아이콘  →  iPhone 12 Pro
+   윈도우: F12             →  폰 모양 아이콘  →  iPhone 12 Pro
+4. 파일을 고치고 저장(Ctrl+S / Cmd+S)하면 화면이 저절로 새로고침된다.
+
+   ※ index.html을 더블클릭해서 바로 열면 지도 파일을 못 읽어서 지구가 안 나온다.
+     꼭 Live Server로 열어야 한다.
+
+
+[2] 파일이 하는 일
+index.html     화면의 뼈대 (어떤 상자가 어디에 있는지)
+style.css      색, 글자 크기, 배치   ← 맨 위 ① 색 모음만 바꿔도 전체 색이 바뀜
+scenes.js      대본: 멘트, 선택지, 수치, 지구 연출 지시
+endings.js     엔딩 9개 + 스페셜 엔딩 문구
+conflicts.js   분쟁 지역 18곳과 카드 내용, 기후재난 후보 나라
+globe.js       3D 지구를 그리는 코드
+data.js        구글 시트 연결 (기록 보내기, 통계 받기, 응모 보내기)
+game.js        게임 엔진 (화면 전환, 수치 계산, 엔딩 판정)
+data/world.geo.json   세계 국경 데이터 (180개 나라)
+img/unesco.png        유네스코학교 회원교 로고
+apps-script.gs        구글 시트에 붙여넣는 코드 (게임 폴더가 아니라 시트에서 돈다)
+
+문구나 숫자만 고칠 때는 scenes.js와 endings.js만 보면 된다.
+game.js와 globe.js는 건드리지 않아도 된다.
+
+
+[3] 자주 고칠 만한 곳
+· 멘트 고치기        → scenes.js 안의 text: `...`
+· 수치 고치기        → scenes.js 안의 change: { peace: +30 }
+· 색 바꾸기          → style.css 맨 위 ① 색 모음
+· 엔딩 문구          → endings.js
+· 분쟁 지역 현황     → conflicts.js 의 now: `...`
+· 제목·부제          → scenes.js 맨 위 TITLE
+
+※ 수치를 고쳤으면 28개 경로를 다시 확인해서 엔딩 9개가 모두 나오는지 봐야 한다.
+
+
+[4] 테스트 요령
+· 주소 끝에 ?fast 를 붙이면 멘트가 저절로 넘어간다.
+  예) http://127.0.0.1:5500/index.html?fast
+· 저장된 기록(엔딩 도감, 동의 여부)을 지우려면
+  개발자 도구 → Application 탭 → Local Storage → orvia. 로 시작하는 줄 삭제
+· 에러가 나면 개발자 도구 → Console 탭의 빨간 글씨를 캡처해서 Claude에게 보여주기
+
+
+[5] 아직 남은 일
+· 구글 시트 연결 (구글시트_설치방법.txt 참고)
+  → 연결 전에도 게임은 그대로 돌아간다. 통계만 안 보인다.
+· 회의장 그림 (AI 이미지) 넣기
+· 인터넷에 올리기 (GitHub Pages) — 이미 올려 두었다면 바뀐 파일만 다시 올리면 된다
+· 배포 직전에 conflicts.js의 분쟁 현황을 최신으로 한 번 더 확인

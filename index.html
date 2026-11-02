@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ORVIA</title>
+
+  <!-- 글꼴: Noto Sans KR (구글 폰트) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ========== H0 처음 화면 ========== -->
+  <section id="home" class="screen home">
+    <canvas id="home-globe" class="home-globe" aria-hidden="true"></canvas>
+    <div class="home-inner">
+      <div class="home-main">
+        <img class="home-logo" src="img/unesco.png" alt="유네스코학교네트워크 회원교">
+        <p id="club" class="club">UNESCO 동아리</p>
+        <h1 id="title-en" class="title-en">ORVIA</h1>
+        <p id="title-sub" class="title-sub">:서로 다른 궤도를 잇는 길</p>
+        <p id="tagline" class="tagline">세계 위에 누구도 없을 때, 우리는 함께할 수 있을까?</p>
+        <p id="maker" class="maker">programmed by 장주연</p>
+        <div class="home-buttons">
+          <button id="btn-start" class="home-btn" type="button">▶ 안내 및 시작</button>
+          <button id="btn-collection" class="home-btn" type="button">📖 수집한 엔딩 (0/9)</button>
+          <button id="btn-notes" class="home-btn" type="button">📓 연구 노트 🔒</button>
+        </div>
+      </div>
+      <p id="home-foot" class="home-foot">2026.11.1 기준 · 이론 기반 가상 시나리오</p>
+    </div>
+  </section>
+
+  <!-- ========== 게임 화면 (W0 ~ C7) ========== -->
+  <section id="game" class="screen game" hidden>
+
+    <!-- 게이지 줄 (칸 4개는 game.js가 scenes.js의 VARS를 보고 만든다) -->
+    <header class="hud">
+      <div id="gauges" class="gauges"></div>
+      <button id="btn-home" class="icon-btn" type="button" aria-label="처음 화면으로">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3.5 11.5 12 4.5l8.5 7M6 10v9.5h4.5V14h3v5.5H18V10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </header>
+
+    <!-- 가운데 무대: 지구와 회의장 -->
+    <div id="stage" class="stage">
+      <canvas id="stage-globe" class="stage-globe"></canvas>
+      <div id="meeting" class="meeting" hidden></div>
+      <p id="stage-note" class="stage-note" hidden></p>
+      <p id="explore" class="explore" hidden></p>
+      <div id="treaty" class="treaty" hidden></div>
+      <button id="treaty-chip" class="treaty-chip" type="button" hidden>📜 협약</button>
+      <div class="legend" aria-hidden="true">
+        <span><i style="background:#F28C28"></i>내전</span>
+        <span><i style="background:#E8508F"></i>국가 간 분쟁</span>
+        <span><i style="background:#9BD770"></i>분단·휴전</span>
+        <span><i style="background:#F5D547"></i>군사적 긴장</span>
+      </div>
+    </div>
+
+    <!-- 멘트 · 선택 상자 -->
+    <div id="dialog" class="dialog">
+      <div id="event-band" class="event-band" hidden>⚠️ 이벤트</div>
+      <p id="last-change" class="last-change" hidden></p>
+      <div class="dialog-body">
+        <div class="tags">
+          <span id="speaker" class="speaker" hidden></span>
+          <span id="sdg-tag" class="sdg-tag" hidden></span>
+        </div>
+        <p id="question" class="question" hidden></p>
+        <p id="line" class="line"></p>
+        <p id="line-note" class="line-note" hidden></p>
+        <p id="applied" class="applied" hidden></p>
+        <div id="choices" class="choices"></div>
+      </div>
+      <span id="next-mark" class="next-mark" hidden>▼</span>
+    </div>
+
+    <p class="game-foot">이론 기반 가상 시나리오 · 2026.11.1 기준</p>
+  </section>
+
+  <!-- ========== 엔딩 화면 ========== -->
+  <section id="ending" class="screen scroll-screen" hidden>
+    <button id="ending-home" class="icon-btn corner" type="button" aria-label="처음 화면으로">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3.5 11.5 12 4.5l8.5 7M6 10v9.5h4.5V14h3v5.5H18V10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div id="ending-page" class="page"></div>
+  </section>
+
+  <!-- ========== 엔딩 도감 ========== -->
+  <section id="collection" class="screen scroll-screen" hidden>
+    <div id="collection-page" class="page"></div>
+  </section>
+
+  <!-- ========== 스페셜 엔딩 ========== -->
+  <section id="special" class="screen scroll-screen special" hidden>
+    <div id="special-page" class="page"></div>
+  </section>
+
+  <!-- ========== 연구 노트 ========== -->
+  <section id="notes" class="screen scroll-screen" hidden>
+    <div id="notes-page" class="page"></div>
+  </section>
+
+  <!-- 팝업 · 알림 · 폰을 눕혔을 때 안내 -->
+  <div id="popup-layer" class="popup-layer" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+  <div class="rotate-notice">📱 폰을 세로로 돌려주세요</div>
+
+</div>
+
+<!-- 순서가 중요하다: 분쟁 → 지구 → 보관함 → 대본 → 엔딩 → 엔진 -->
+<script src="conflicts.js"></script>
+<script src="globe.js"></script>
+<script src="data.js"></script>
+<script src="scenes.js"></script>
+<script src="endings.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
